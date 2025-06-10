@@ -44,7 +44,7 @@ Write-only S3 access role for EC2 log uploads
 
 • To Destroy The Infrastructure 
 
-`./scripts/deploy.sh dev destory` 
+`./scripts/deploy.sh dev destroy` 
 
 ## 🚀 Display the output
 • Application_url = "Your-application-ip"
