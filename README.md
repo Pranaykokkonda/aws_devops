@@ -69,5 +69,5 @@ Write-only S3 access role for EC2 log uploads
 ## 🚀 Access the application
 • Wait for 2-3 minutes for the application to start
 
-• Access your Java application via the public IP address (e.g., http://<public_ip>) and check S3 bucket
+• Access your Java application via the public IP address (e.g., http://<public_ip>) and check S3 bucket for log files
 
