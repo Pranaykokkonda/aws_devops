@@ -23,7 +23,7 @@ This Terraform configuration deploys a Java application on AWS EC2 with comprehe
 
 • Run the terraform script by following command
 
-`./scripts/deploy.sh dev deploy`           # or prod
+`./scripts/deploy.sh dev deploy`            # or prod
 
 • To Destroy The Infrastructure 
 
