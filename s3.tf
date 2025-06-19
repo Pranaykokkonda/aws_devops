@@ -24,6 +24,7 @@ resource "aws_s3_bucket_public_access_block" "log_bucket_pab" {
 # Bucket versioning
 resource "aws_s3_bucket_versioning" "log_bucket_versioning" {
   bucket = aws_s3_bucket.log_bucket.id
+
   versioning_configuration {
     status = "Enabled"
   }
@@ -40,9 +41,16 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "log_bucket_encryp
   }
 }
 
-# Lifecycle rule to delete logs after specified days
+# Combined Lifecycle configuration (only one allowed per bucket)
 resource "aws_s3_bucket_lifecycle_configuration" "log_bucket_lifecycle" {
   bucket = aws_s3_bucket.log_bucket.id
+
+  depends_on = [
+    aws_s3_bucket.log_bucket,
+    aws_s3_bucket_versioning.log_bucket_versioning,
+    aws_s3_bucket_server_side_encryption_configuration.log_bucket_encryption,
+    aws_s3_bucket_public_access_block.log_bucket_pab
+  ]
 
   rule {
     id     = "delete_logs_after_${var.log_retention_days}_days"
