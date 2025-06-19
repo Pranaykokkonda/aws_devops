@@ -28,24 +28,6 @@ variable "volume_size" {
   default     = 10
 }
 
-variable "vpc_name" {
-  description = "Name of the VPC"
-  type        = string
-  default     = "techeazy-vpc"
-}
-
-variable "subnet_name" {
-  description = "Name of the subnet"
-  type        = string
-  default     = "techeazy-subnet"
-}
-
-variable "sg_name" {
-  description = "Security group name"
-  type        = string
-  default     = "techeazy-sg"
-}
-
 variable "ami_id" {
   description = "AMI ID for the instance"
   type        = string
