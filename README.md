@@ -2,7 +2,7 @@
 This Terraform configuration deploys a Java application on AWS EC2 with comprehensive S3 log management, IAM roles, and automated log archival.
 
 ## 🏗️ Architecture Overview
-## Infrastructure Components🔮
+## Infrastructure Components
 
 • VPC & Networking: Custom VPC with public subnet, internet gateway, and routing
 
