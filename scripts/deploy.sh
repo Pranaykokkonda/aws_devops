@@ -74,8 +74,7 @@ case $ACTION in
         echo "🔗 Next steps:"
         echo "1. Wait 2-3 minutes for the application to start"
         echo "2. Access your application at: $(terraform output -raw application_url 2>/dev/null || echo 'Check outputs above')"
-        echo "3. Verify S3 access: $0 $STAGE verify"
-        echo "4. SSH to instance: ssh -i ~/.ssh/${key_name:-EC2-key}.pem ubuntu@$(terraform output -raw instance_public_ip 2>/dev/null || echo 'CHECK_OUTPUT')"
+
         ;;
 
     "verify")
