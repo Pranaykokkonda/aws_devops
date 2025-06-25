@@ -43,13 +43,13 @@ variable "ami_id" {
 variable "github_username" {
   description = "Username of the github account"
   type        = string
-  default     = "<Enter GitHub username>"
+  default     = "Pranaykokkonda"
 }
 
 variable "github_token" {
   description = "GitHub token for private repo access"
   type        = string
-  default     = "${{ secrets.GITHUBTOKEN }}"
+  default     = "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"
   sensitive   = true
 }
 
