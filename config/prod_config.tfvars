@@ -1,7 +1,10 @@
 # prod_config.tfvars
 stage           = "prod"
 instance_type   = "t2.micro"
-repo_url        = "https://github.com/techeazy-consulting/techeazy-devops.git"
+repo_url        = "https://github.com/Pranaykokkonda/techeazy-devops.git"
+use_private_repo = true
+github_username = "Pranaykokkonda"
+github_token    = "<Insert-github-token-here>"
 key_name        = "EC2-key"
 volume_size     = 20
 ami_id          = "ami-0a7d80731ae1b2435"
