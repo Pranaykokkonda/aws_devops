@@ -18,9 +18,9 @@ resource "aws_instance" "Java_app_deploy" {
 
   user_data = base64encode(templatefile("scripts/user_data.sh", {
     repo_url       = var.repo_url,
-    github_token     = var.github_token,
-    github_username  = var.github_username,
-    use_private_repo = var.use_private_repo,
+  github_token     = var.github_token,
+  github_username  = var.github_username,
+  use_private_repo = var.use_private_repo,
     s3_bucket_name = var.s3_bucket_name,
     stage          = var.stage
   }))
