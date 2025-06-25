@@ -12,8 +12,8 @@ data "aws_iam_policy_document" "ec2_assume_role" {
 
 # Policy that grants Terraform user permissions to create IAM roles, policies and S3 buckets
 resource "aws_iam_policy" "terraform_permissions" {
-  name        = "terraform-iam-s3-permissions"
-  description = "Permissions for Terraform user to create roles, policies, and S3 buckets"
+  name        = "terraform-iam-s3-permissions-${var.stage}"
+  description = "Permissions for Terraform user to create roles, policies, and S3 buckets[${var.stage}]"
   policy      = jsonencode({
     Version = "2012-10-17"
     Statement = [
