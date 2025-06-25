@@ -16,6 +16,12 @@ variable "repo_url" {
   default     = "https://github.com/techeazy-consulting/techeazy-devops.git"
 }
 
+variable "use_private_repo" {
+  description = "Whether to use private GitHub repo"
+  type        = bool
+  default     = false
+}
+
 variable "key_name" {
   description = "Name of the EC2 key pair"
   type        = string
@@ -32,6 +38,19 @@ variable "ami_id" {
   description = "AMI ID for the instance"
   type        = string
   default     = "ami-0a7d80731ae1b2435"
+}
+
+variable "github_username" {
+  description = "Username of the github account"
+  type        = string
+  default     = "Pranaykokkonda"
+}
+
+variable "github_token" {
+  description = "GitHub token for private repo access"
+  type        = string
+  default     = "<Enter-GitHub-token-Here>"
+  sensitive   = true
 }
 
 variable "s3_bucket_name" {
