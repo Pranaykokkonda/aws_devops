@@ -3,10 +3,11 @@ This Terraform configuration deploys a Java application on AWS EC2 with comprehe
 
 ## 🔧 Features
 
-- Configurable per-environment setup (🧪 Dev / 🚀 Prod)
+- Configurable per-environment setup [🧪Dev (with public repository) and 🚀Prod (with private repository)]
 - Amazon EC2 instance with Java, Maven and Git 🖥️☕📦
 - Auto-clones and builds Spring Boot app from GitHub with S3 bucket 🤖📥🔨
 - Configurable using `main.tf and .tfvars` files
+- Insert the github token for private repository at variables.tf and prod_config.tfvars files
 
 ---
 
@@ -23,11 +24,15 @@ This Terraform configuration deploys a Java application on AWS EC2 with comprehe
 
 • Run the terraform script by following command
 
-`./scripts/deploy.sh dev deploy`            # or prod
+`./scripts/deploy.sh prod deploy`
+
+`./scripts/new.sh dev deploy`
 
 • To Destroy The Infrastructure 
 
-`./scripts/deploy.sh dev destroy` 
+`./scripts/deploy.sh prod destroy`
+
+`./scripts/new.sh dev destroy`
 
 ## 💻 Display the output
 •Upon successful deployment the application_url, instance-id, public_ip, s3_bucket_name and s3_bucket_arn will be displayed
