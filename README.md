@@ -7,7 +7,7 @@ This Terraform configuration deploys a Java application on AWS EC2 with comprehe
 - Amazon EC2 instance with Java, Maven and Git 🖥️☕📦
 - Auto-clones and builds Spring Boot app from GitHub with S3 bucket 🤖📥🔨
 - Configurable using `main.tf and .tfvars` files
-- Insert the github token for private repository at variables.tf and prod_config.tfvars files
+- Insert the github token for private repository at `variables.tf and prod_config.tfvars` files
 
 ---
 
