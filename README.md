@@ -6,7 +6,7 @@ This Terraform configuration deploys a Java application on AWS EC2 with comprehe
 - Configurable per-environment setup [🧪Dev (with public repository) and 🚀Prod (with private repository)]
 - Amazon EC2 instance with Java, Maven and Git 🖥️☕📦
 - Auto-clones and builds Spring Boot app from GitHub with S3 bucket 🤖📥🔨
-- Configurable using `main.tf and .tfvars` files
+- Configurable using `main.tf , .tfvars and variables.tf` files
 
 ---
 
