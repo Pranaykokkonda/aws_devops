@@ -43,7 +43,7 @@ variable "ami_id" {
 variable "github_username" {
   description = "Username of the github account"
   type        = string
-  default     = "Pranaykokkonda"
+  default     = "Enter your github username"
 }
 
 variable "github_token" {
