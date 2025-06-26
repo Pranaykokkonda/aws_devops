@@ -49,7 +49,7 @@ variable "github_username" {
 variable "github_token" {
   description = "GitHub token for private repo access"
   type        = string
-  default     = "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"
+  default     = "${{ secrets.GITHUBTOKEN }}"
   sensitive   = true
 }
 
