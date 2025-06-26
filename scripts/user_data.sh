@@ -17,7 +17,15 @@ chmod 755 /opt/techeazy-app/logs
 chmod 755 /home/ubuntu/app-logs
 
 cd /home/ubuntu
-git clone ${repo_url}
+#git clone ${repo_url}
+%{ if use_private_repo }
+  echo "🔐 Cloning private repo..."
+  git clone https://${github_username}:${github_token}@${replace(repo_url, "https://", "")}
+%{ else }
+  echo "🌐 Cloning public repo..."
+  git clone ${repo_url}
+%{ endif }
+
 chown -R ubuntu:ubuntu /home/ubuntu
 
 cd techeazy-devops
