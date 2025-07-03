@@ -44,3 +44,14 @@ This Terraform configuration deploys a Java application on AWS EC2 with comprehe
 
 • Access your Java application via the public IP address (e.g., http://<public_ip>) and check S3 bucket for log files
 
+## 💻 TO Make trigger SNS Alert with cloudwatch and Receice alerts via gmail
+• Login into the dev or prod instance or server and run below command
+
+aws cloudwatch put-metric-data \
+  --namespace "AppMonitoring" \
+  --metric-name "AppErrorCount" \
+  --value 1 \
+  --region us-east-1
+
+• Wait for a couple of minutes to triger alert via gmail
+• Check your cloudwatch alarm state indicating alert and check your gmail for the alert 
