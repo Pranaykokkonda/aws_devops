@@ -54,4 +54,5 @@ aws cloudwatch put-metric-data \
   --region us-east-1
 
 • Wait for a couple of minutes to triger alert via gmail
+
 • Check your cloudwatch alarm state indicating alert and check your gmail for the alert 
