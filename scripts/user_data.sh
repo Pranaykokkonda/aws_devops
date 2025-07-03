@@ -55,6 +55,22 @@ cat > /etc/logrotate.d/techeazy-app << 'EOF'
 }
 EOF
 
+# Install CloudWatch Agent
+wget https://s3.amazonaws.com/amazoncloudwatch-agent/ubuntu/amd64/latest/amazon-cloudwatch-agent.deb
+sudo dpkg -i amazon-cloudwatch-agent.deb
+
+echo "Fetching CloudWatch Agent config..."
+curl -o /opt/aws/amazon-cloudwatch-agent/bin/config.json "${cw_agent_config_url}"
+
+# Start CloudWatch Agent
+/opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl \
+  -a fetch-config \
+  -m ec2 \
+  -c file:/opt/aws/amazon-cloudwatch-agent/bin/config.json \
+  -s
+
+echo "CloudWatch Agent started with config from ${cw_agent_config_url}"
+
 # Create a shutdown script for log upload
 cat > /opt/shutdown-upload.sh << 'SHUTDOWN_SCRIPT'
 #!/bin/bash
