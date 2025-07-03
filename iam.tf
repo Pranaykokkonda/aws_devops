@@ -125,9 +125,38 @@ resource "aws_iam_policy" "s3_writeonly_policy" {
   policy      = data.aws_iam_policy_document.s3_writeonly_policy.json
 }
 
+data "aws_iam_policy_document" "cloudwatch_logs_policy" {
+  statement {
+    effect = "Allow"
+    actions = [
+      "logs:CreateLogGroup",
+      "logs:CreateLogStream",
+      "logs:PutLogEvents",
+      "logs:DescribeLogStreams"
+    ]
+    resources = ["*"]
+  }
+}
+
+resource "aws_iam_policy" "cloudwatch_logs_policy" {
+  name        = "${var.stage}-cloudwatch-logs-policy"
+  description = "Policy to allow CloudWatch Logs access for EC2"
+  policy      = data.aws_iam_policy_document.cloudwatch_logs_policy.json
+}
+
 resource "aws_iam_role_policy_attachment" "s3_writeonly_attachment" {
   role       = aws_iam_role.s3_writeonly_role.name
   policy_arn = aws_iam_policy.s3_writeonly_policy.arn
+}
+
+resource "aws_iam_role_policy_attachment" "cloudwatch_logs_attachment" {
+  role       = aws_iam_role.s3_writeonly_role.name
+  policy_arn = aws_iam_policy.cloudwatch_logs_policy.arn
+}
+
+resource "aws_iam_role_policy_attachment" "cloudwatch_fullaccess_to_s3_writeonly_role" {
+  role       = aws_iam_role.s3_writeonly_role.name
+  policy_arn = "arn:aws:iam::aws:policy/CloudWatchFullAccess"
 }
 
 # Instance Profile for EC2 (attaches write-only role)
