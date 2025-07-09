@@ -1,6 +1,6 @@
 # variables.tf
 variable "stage" {
-  description = "Deployment stage (e.g. dev, prod)"
+  description = "Deployment stage (e.g. dev, prod, test)"
   type        = string
 }
 
