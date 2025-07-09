@@ -8,5 +8,5 @@ github_token    = "${{ secrets.GITHUBTOKEN }}"
 key_name        = "EC2-key"
 volume_size     = 20
 ami_id          = "ami-0a7d80731ae1b2435"
-s3_bucket_name  = "techeazy-prod-logs-bucket-20250610"
+s3_bucket_name  = "techeazy-prod-logs-bucket"
 log_retention_days = 7
