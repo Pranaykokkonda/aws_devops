@@ -3,7 +3,7 @@ This Terraform configuration deploys a Java application on AWS EC2 with comprehe
 
 ## 🔧 Features
 
-- Configurable per-environment setup [🧪Dev (with public repository) and 🚀Prod (with private repository)]
+- Configurable per-environment stage setup [🧪Dev & 🧪Test (with public repository) and 🚀Prod (with private repository)]
 - Amazon EC2 instance with Java, Maven and Git 🖥️☕📦
 - Auto-clones and builds Spring Boot app from GitHub with S3 bucket 🤖📥🔨
 - Configurable using `main.tf , .tfvars and variables.tf` files
@@ -23,17 +23,21 @@ This Terraform configuration deploys a Java application on AWS EC2 with comprehe
 
 `chmod +x scripts/*`
 
-• Run the terraform script by following command
+• Based on required stage execute the terraform script by following command
 
 `./scripts/deploy.sh prod deploy`
 
 `./scripts/new.sh dev deploy`
+
+`./scripts/new.sh test deploy`
 
 • To Destroy The Infrastructure 
 
 `./scripts/deploy.sh prod destroy`
 
 `./scripts/new.sh dev destroy`
+
+`./scripts/new.sh test destroy`
 
 ## 💻 Display the output
 •Upon successful deployment the application_url, instance-id, public_ip, s3_bucket_name and s3_bucket_arn will be displayed
