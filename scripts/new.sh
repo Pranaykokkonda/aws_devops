@@ -7,7 +7,7 @@ STAGE=$1
 ACTION=${2:-"deploy"}
 
 if [[ -z "$STAGE" ]]; then
-    echo "❌ Please provide a stage (dev or prod)"
+    echo "❌ Please provide a stage (dev or prod or test)"
     echo "Usage: $0 <stage> [deploy|destroy|verify]"
     exit 1
 fi
