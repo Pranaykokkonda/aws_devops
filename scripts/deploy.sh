@@ -13,7 +13,7 @@ ACTION=${2:-"deploy"}
 # export AWS_SECRET_ACCESS_KEY="your-secret-access-key"
 
 if [[ -z "$STAGE" ]]; then
-    echo "❌ Please provide a stage (dev or prod)"
+    echo "❌ Please provide a stage (dev or prod or test)"
     echo "Usage: $0 <stage> [deploy|destroy|verify]"
     echo "Examples:"
     echo "  $0 dev deploy    # Deploy infrastructure"
