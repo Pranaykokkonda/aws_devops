@@ -1,6 +1,6 @@
 # variables.tf
 variable "stage" {
-  description = "Deployment stage (e.g. dev, prod)"
+  description = "Deployment stage (e.g. dev, prod, test)"
   type        = string
 }
 
@@ -16,6 +16,12 @@ variable "repo_url" {
   default     = "https://github.com/techeazy-consulting/techeazy-devops.git"
 }
 
+variable "use_private_repo" {
+  description = "Whether to use private GitHub repo"
+  type        = bool
+  default     = false
+}
+
 variable "key_name" {
   description = "Name of the EC2 key pair"
   type        = string
@@ -28,28 +34,23 @@ variable "volume_size" {
   default     = 10
 }
 
-variable "vpc_name" {
-  description = "Name of the VPC"
-  type        = string
-  default     = "techeazy-vpc"
-}
-
-variable "subnet_name" {
-  description = "Name of the subnet"
-  type        = string
-  default     = "techeazy-subnet"
-}
-
-variable "sg_name" {
-  description = "Security group name"
-  type        = string
-  default     = "techeazy-sg"
-}
-
 variable "ami_id" {
   description = "AMI ID for the instance"
   type        = string
   default     = "ami-0a7d80731ae1b2435"
+}
+
+variable "github_username" {
+  description = "Username of the github account"
+  type        = string
+  default     = "Enter your github username"
+}
+
+variable "github_token" {
+  description = "GitHub token for private repo access"
+  type        = string
+  default     = "${{ secrets.GITHUBTOKEN }}"
+  sensitive   = true
 }
 
 variable "s3_bucket_name" {

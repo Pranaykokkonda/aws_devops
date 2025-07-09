@@ -13,7 +13,7 @@ ACTION=${2:-"deploy"}
 # export AWS_SECRET_ACCESS_KEY="your-secret-access-key"
 
 if [[ -z "$STAGE" ]]; then
-    echo "❌ Please provide a stage (dev or prod)"
+    echo "❌ Please provide a stage (dev or prod or test)"
     echo "Usage: $0 <stage> [deploy|destroy|verify]"
     echo "Examples:"
     echo "  $0 dev deploy    # Deploy infrastructure"
@@ -49,7 +49,7 @@ cd "$SCRIPT_DIR/.."
 case $ACTION in
     "deploy")
         echo "🚀 Deploying infrastructure..."
-        
+
         # Validate S3 bucket name uniqueness
         echo "🔍 Checking S3 bucket availability..."
         if aws s3 ls "s3://$S3_BUCKET_NAME" 2>/dev/null; then
@@ -57,49 +57,48 @@ case $ACTION in
         else
             echo "✅ S3 bucket name is available"
         fi
-        
+
         # Initialize and apply Terraform
         terraform init
         terraform plan -var-file="$CONFIG_FILE" -out=tfplan
         terraform apply tfplan
-        
+
         echo "✅ Deployment completed successfully!"
-        
+
         # Display outputs
         echo ""
         echo "📋 Deployment Summary:"
         terraform output
-        
+
         echo ""
         echo "🔗 Next steps:"
         echo "1. Wait 2-3 minutes for the application to start"
         echo "2. Access your application at: $(terraform output -raw application_url 2>/dev/null || echo 'Check outputs above')"
-        echo "3. Verify S3 access: $0 $STAGE verify"
-        echo "4. SSH to instance: ssh -i ~/.ssh/${key_name:-EC2-key}.pem ubuntu@$(terraform output -raw instance_public_ip 2>/dev/null || echo 'CHECK_OUTPUT')"
+
         ;;
 
     "verify")
         echo "🔍 Verifying S3 access permissions..."
-        
+
         # Check if infrastructure exists
         if ! terraform show &>/dev/null; then
             echo "❌ No Terraform state found. Please deploy first: $0 $STAGE deploy"
             exit 1
         fi
-        
+
         # Run verification script
         if [[ -f "$SCRIPT_DIR/verify_s3_access.sh" ]]; then
             chmod +x "$SCRIPT_DIR/verify_s3_access.sh"
             "$SCRIPT_DIR/verify_s3_access.sh" "$STAGE" "$S3_BUCKET_NAME"
         else
             echo "⚠️  Verification script not found, running manual checks..."
-            
+
             # Manual verification
             READONLY_ROLE_ARN=$(terraform output -raw readonly_role_arn 2>/dev/null)
-            
+
             if [[ -n "$READONLY_ROLE_ARN" ]]; then
                 echo "✅ Read-only role ARN: $READONLY_ROLE_ARN"
-                
+
                 # Try to assume role and list bucket
                 echo "🔄 Testing read-only access..."
                 TEMP_CREDS=$(aws sts assume-role \
@@ -107,20 +106,20 @@ case $ACTION in
                     --role-session-name "verification-test" \
                     --query 'Credentials.[AccessKeyId,SecretAccessKey,SessionToken]' \
                     --output text 2>/dev/null || echo "")
-                
+
                 if [[ -n "$TEMP_CREDS" ]]; then
                     echo "✅ Successfully assumed read-only role"
                     echo "📋 Listing bucket contents..."
-                    
+
                     # Set temporary credentials
                     AWS_ACCESS_KEY_ID=$(echo $TEMP_CREDS | cut -d'\t' -f1)
                     AWS_SECRET_ACCESS_KEY=$(echo $TEMP_CREDS | cut -d'\t' -f2)
                     AWS_SESSION_TOKEN=$(echo $TEMP_CREDS | cut -d'\t' -f3)
-                    
+
                     export AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN
-                    
+
                     aws s3 ls "s3://$S3_BUCKET_NAME" --recursive || echo "Bucket might be empty"
-                    
+
                     # Unset temporary credentials
                     unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN
                 else
@@ -136,7 +135,7 @@ case $ACTION in
         echo "💥 Destroying infrastructure..."
         echo "⚠️  This will permanently delete all resources!"
         read -p "Are you sure? (yes/no): " confirmation
-        
+
         if [[ "$confirmation" == "yes" ]]; then
             # Upload any remaining logs before destruction
             INSTANCE_ID=$(terraform output -raw instance_id 2>/dev/null || echo "")
@@ -145,7 +144,7 @@ case $ACTION in
                 aws ec2 stop-instances --instance-ids "$INSTANCE_ID" || echo "Instance might already be stopped"
                 sleep 30  # Wait for shutdown script to upload logs
             fi
-            
+
             terraform destroy -var-file="$CONFIG_FILE" -auto-approve
             echo "✅ Infrastructure destroyed successfully!"
         else
